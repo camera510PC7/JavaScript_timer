@@ -1,12 +1,24 @@
 <html>
 <head>
-<title>カウントダウンタイマー</title>
+<title>
+カウントダウンタイマー
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--マルチデバイス対応-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <script type="text/javascript" src="script.js"></script>
 <body>
 <center>
 
 <form name="selbox">
+アラーム音
+<select name="sound">
+<option value=1>パターン１</option>
+<option value=2>パターン2</option>
+<option value=3>パターン3</option>
+</select>
+<br><br>
 <select name="minute">
 <option value=0>0</option>
 <option value=1>1</option>
@@ -133,11 +145,21 @@
 <option value=59>59</option>
 </select>
 秒
-<input type="button" value="スタート" onClick="timer_start()" name="start">
+<br>
+<br>
+<div id="timer" style="min-width:250px; max-width:300px; border:double 2px black;">
+<div id="minute" style="display:table-cell; font-size:525%;"></div>
+<font style="display:table-cell;" size="5">分</font>
+<div id="second" style="display:table-cell; font-size:525%;"></div>
+<font style="display:table-cell;" size="5">秒</font>
+</div>
+<br>
+<input type="button" value="スタート" onClick="timaer_start()" name="start">
 <input type="button" value="一時停止" onClick="timer_wait()" name="wait" disabled>
 <input type="button" value="リセット" onClick="timer_reset()" name="reset" disabled>
 </form>
-<div id="timer"></div>
+<br><br><br>
+<i>アラーム素材：<a href="http://musicisvfr.com/" target="_blanc">Music is VFR</a></i>
 </center>
 </body>
 </html>

@@ -5,15 +5,40 @@ var interval;
 var wait;
 var im;
 var is;
+var so;
+var sound;
+var audioElem;
+var audioElembp;
 
-wait=0
+window.onload=function(){
+wait=0;
+minute=0;
+second=0;
+audioElem=new Audio();
+audioElembp=new Audio();
+document.getElementById("minute").innerHTML=show_m();
+document.getElementById("second").innerHTML=show_s();
 
-function timer_start(){
-	document.selbox.elements[3].disabled=false;
-	document.selbox.elements[4].disabled=false;
+if(audioElembp.canPlayType('audio/mp3')){
+
+	audioElembp.src="sound/beep.mp3";
 	
-	document.selbox.elements[2].disabled=true;
-	
+}else if(audioElembp.canPlayType('audio/wav')){
+
+	audioElembp.src="sound/beep.wav";
+
+}
+};
+
+function timaer_start(){
+
+	audioElembp.play();
+
+	document.selbox.sound.disabled=true;
+	document.selbox.start.disabled=true;	
+	document.selbox.wait.disabled=false;
+	document.selbox.reset.disabled=false;
+
 	if(wait==0){
 		var element_m=document.selbox.minute;
 		var element_s=document.selbox.second;
@@ -31,16 +56,35 @@ function timer_start(){
 	}
 	}
 	
-	if(document.selbox.elements[0].value==0 && document.selbox.elements[1].value==0 ){
+	if(document.selbox.minute.value==0 && document.selbox.second.value==0 ){
 		alert("時間を入力してください")
 		
-		document.selbox.elements[2].disabled=false;
-		document.selbox.elements[3].disabled=true;
-		document.selbox.elements[4].disabled=true;
+		document.selbox.sound.disabled=false;
+		document.selbox.start.disabled=false;
+		document.selbox.wait.disabled=true;
+		document.selbox.reset.disabled=true;
 		return;
 	}
 	
+
+	var element_so=document.selbox.sound;
+
+	for(so=0;so<element_so.options.length;so++){
+		if(element_so.options[so].selected){
+			sound=element_so.options[so].value;
+		}
+	}
 	
+	if(audioElem.canPlayType('audio/mp3')){
+
+		audioElem.src="sound/"+ sound +".mp3";
+	
+	}else if(audioElem.canPlayType('audio/wav')){
+
+		audioElem.src="sound/"+ sound +".wav";
+
+	}
+
 	interval=setInterval("timer()",1000);
 }
 	
@@ -48,14 +92,27 @@ function timer(){
 	
 	
 	if(minute<=0 && second<=0){
-		document.getElementById("timer").innerHTML=show();
+		second=0
+		document.getElementById("minute").innerHTML=show_m();
+		document.getElementById("second").innerHTML=show_s();
+
+		audioElem.play();
+		audioElem.loop=true;
+
 		alert("時間です");
+
+		audioElembp.play();
+
+		audioElem.pause();
+
 		clearInterval(interval);		
+		document.selbox.start.disabled=false;
 		wait=0
 		
-		document.selbox.elements[2].disabled=false;
-		document.selbox.elements[3].disabled=true;
-		document.selbox.elements[4].disabled=true;
+		document.selbox.sound.disabled=false;
+		document.selbox.start.disabled=false;
+		document.selbox.wait.disabled=true;
+		document.selbox.reset.disabled=true;
 		
 		return;
 	}
@@ -68,33 +125,55 @@ function timer(){
 	}
 	
 	
-	document.getElementById("timer").innerHTML=show();
+	document.getElementById("minute").innerHTML=show_m();
+	document.getElementById("second").innerHTML=show_s();
 	
 	second=second-1;
 
 }
 
-function show(){
-	var result;
-	result=minute+"分"+second+"秒";
+function show_m(){
+	var result_m;
+	result_m=minute;
 	
-	return result;
+	return result_m;
 }
 
+function show_s(){
+	var result_s;
+	result_s=second;
+	
+	return result_s;
+
+}
 
 function timer_reset(){
-	document.selbox.elements[2].disabled=false;
-	document.selbox.elements[3].disabled=true;
-	document.selbox.elements[4].disabled=true;
+	
+	audioElembp.play();	
+	
+	document.selbox.sound.disabled=false;
+	document.selbox.start.disabled=false;
+	document.selbox.wait.disabled=true;
+	document.selbox.reset.disabled=true;
 	
 	clearInterval(interval);
 	
 	wait=0;
+
+	minute=0;
+	second=0;
+
+	document.getElementById("minute").innerHTML=show_m();
+	document.getElementById("second").innerHTML=show_s();
 }
 
 function timer_wait(){
-	document.selbox.elements[3].disabled=true;
-	document.selbox.elements[2].disabled=false;
+
+	audioElembp.play();
+
+	document.selbox.sound.disabled=false;
+	document.selbox.wait.disabled=true;
+	document.selbox.start.disabled=false;
 	
 	wait=1;
 	
